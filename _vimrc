@@ -1,4 +1,5 @@
 "basic apperance
+"
 colorscheme delek
 set guifont=Consolas:h11::cANSI
 set lines=70 columns=180
