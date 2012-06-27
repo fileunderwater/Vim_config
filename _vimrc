@@ -9,7 +9,7 @@ set history=1500
 set cmdheight=2
 
 "default directory
-cd C:/Users/tobjep/texttmp
+cd /home/tobias/tmp
 
 "stuff
 syntax enable
@@ -22,13 +22,14 @@ behave mswin
 setglobal nobomb
 setglobal fileencodings=utf-8,usc-bom,latin1
 setglobal encoding=utf-8
+set ffs=dos,unix
 
 ""turn on line numbers
 set number
 
 ""set new backup directory
-set backupdir=c:\Users\tobjep\texttmp,.
-set directory=c:\Users\tobjep\texttmp,.
+set backupdir=/home/tobias/tmp,.
+set directory=/home/tobias/tmp,.
 
 ""to turn of backups
 "set nobackup
