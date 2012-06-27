@@ -35,7 +35,15 @@ set directory=c:\Users\tobjep\texttmp,.
 "vertical split
 set splitright
 
-"# WRAPPING #####################
+" MAPPINGS ##############
+noremap <C-s> i<CR><Esc>
+noremap , :
+imap ii <ESC>
+vmap ii <ESC>
+nmap '' `
+nmap 9 $
+
+" WRAPPING #####################
 "option for wraping words
 set wrap linebreak
 "set showbreak='...'
@@ -66,15 +74,8 @@ map <C-k> gk
 "inoremap gk
 "set linebreak
 
-"# OTHER MAPPINGS ##############
-noremap <C-s> i<CR><Esc>
-noremap , :
-imap ii <ESC>
-vmap ii <ESC>
-nmap '' `
-nmap 9 $
 
-"""Python stuff
+"Python stuff
 "###############################################
 noremap <F5> <ESC>:w<CR>: execute "!python %"<CR><CR>
 noremap <C-F5> <ESC>:w<CR>: execute "!c:/python32/python %"<CR><CR>
@@ -97,7 +98,26 @@ autocmd FileType * set tabstop=2|set shiftwidth=2|set noexpandtab
 autocmd FileType python set tabstop=4|set shiftwidth=4|set expandtab
 set softtabstop=4 " makes the spaces feel like real tabs
 
-"###############################################
+"# VIM_LATEX #####################
+" REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
+filetype plugin on
+
+" IMPORTANT: win32 users will need to have 'shellslash' set so that latex
+" can be called correctly.
+set shellslash
+
+" IMPORTANT: grep will sometimes skip displaying the file name if you
+" search in a singe file. This will confuse Latex-Suite. Set your grep
+" program to always generate a file-name.
+set grepprg=grep\ -nH\ $*
+
+" OPTIONAL: This enables automatic indentation as you type.
+filetype indent on
+
+" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
+" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
+" The following changes the default filetype back to 'tex':
+let g:tex_flavor='latex'
 
 
 "#OTHER STUFF################################
@@ -128,25 +148,5 @@ function MyDiff()
 endfunction
 
 
-"# VIM_LATEX #####################
-" REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
-filetype plugin on
-
-" IMPORTANT: win32 users will need to have 'shellslash' set so that latex
-" can be called correctly.
-set shellslash
-
-" IMPORTANT: grep will sometimes skip displaying the file name if you
-" search in a singe file. This will confuse Latex-Suite. Set your grep
-" program to always generate a file-name.
-set grepprg=grep\ -nH\ $*
-
-" OPTIONAL: This enables automatic indentation as you type.
-filetype indent on
-
-" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
-" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
-" The following changes the default filetype back to 'tex':
-let g:tex_flavor='latex'
 
 ""
