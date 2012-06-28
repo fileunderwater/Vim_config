@@ -13,7 +13,7 @@ set history=1500
 set cmdheight=2
 
 "default directory
-cd /home/tobias/tmp
+cd c:/Users/tobjep/texttmp
 
 "stuff
 syntax enable
@@ -32,8 +32,8 @@ set ffs=dos,unix
 set number
 
 ""set new backup directory
-set backupdir=/home/tobias/tmp,.
-set directory=/home/tobias/tmp,.
+set backupdir=c:/Users/tobjep/texttmp,.
+set directory=c:/Users/tobjep/texttmp,.
 
 ""to turn of backups
 "set nobackup
@@ -162,3 +162,10 @@ function MyDiff()
 endfunction
 
 ""
+function mark2html()
+		:let p=expand("%:p:h")
+		:let n=expand("%:t:r")
+		:Markdown
+		:vert split
+		:exe "e" p."/".n.".html" 
+endfunction
