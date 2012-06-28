@@ -1,5 +1,9 @@
-"basic apperance
-"
+" _vimrc
+" Contains general settings, key mappings and stuff for specifik programs
+" and plugins
+ 
+"BASIC APPERANCE
+"--------------------------------------------------------------
 colorscheme delek
 set guifont=Consolas:h11::cANSI
 set lines=70 columns=180
@@ -37,7 +41,8 @@ set directory=/home/tobias/tmp,.
 "vertical split
 set splitright
 
-" MAPPINGS ##############
+" GENERAL MAPPINGS
+" -----------------------------------------
 noremap <C-s> i<CR><Esc>
 noremap , :
 imap ii <ESC>
@@ -45,14 +50,15 @@ vmap ii <ESC>
 nmap '' `
 nmap 9 $
 
-" WRAPPING #####################
+" WRAPPING 
+" -----------------------------------------
 "option for wraping words
 set wrap linebreak
 "set showbreak='...'
 
 ""set shortcuts for wrapped pages
 nnoremap <C-j> gj
-map <C-k> gk
+nnoremap <C-k> gk
 "nmap <C-1> $
 "vmap <D-4> g$
 "vmap <D-6> g^
@@ -74,11 +80,10 @@ map <C-k> gk
 "vnoremap gk
 "inoremap gj
 "inoremap gk
-"set linebreak
 
 
 "Python stuff
-"###############################################
+"-----------------------------------------------------
 noremap <F5> <ESC>:w<CR>: execute "!python %"<CR><CR>
 noremap <C-F5> <ESC>:w<CR>: execute "!c:/python32/python %"<CR><CR>
 "noremap <F5> <ESC>:w<CR>:silent execute "!python %"<CR><CR>
@@ -95,12 +100,14 @@ map <C-Space> <C-Shift-x><C-Shift-o>
 "to fix remap conflict with imaps/latex-vim
 nnoremap <SID><C-S-j> <Plug>IMAP_JumpForward
 
-"reset to use spaces instead of tabs in python
+"to use spaces instead of tabs in python
 autocmd FileType * set tabstop=2|set shiftwidth=2|set noexpandtab
 autocmd FileType python set tabstop=4|set shiftwidth=4|set expandtab
 set softtabstop=4 " makes the spaces feel like real tabs
 
-"# VIM_LATEX #####################
+
+"# VIM_LATEX 
+" ----------------------------------------------------
 " REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
 filetype plugin on
 
@@ -122,8 +129,13 @@ filetype indent on
 let g:tex_flavor='latex'
 
 
-"#OTHER STUFF################################
+" MARKDOWN 
+" -----------------------------------------------
+" create a html document from markdown file
+command Markdown ! perl "c:\Program Files (x86)\Markdown_1.0.1\Markdown.pl" --html4tags %:p > %:p:h/%:t:r.html
 
+
+"#OTHER STUFF################################
 set diffexpr=MyDiff()
 function MyDiff()
   let opt = '-a --binary '
@@ -148,7 +160,5 @@ function MyDiff()
   endif
   silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
 endfunction
-
-
 
 ""
