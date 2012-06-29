@@ -1,6 +1,7 @@
 " _vimrc
 " Contains general settings, key mappings and stuff for specifik programs
 " and plugins
+" test edit
  
 "BASIC APPERANCE
 "--------------------------------------------------------------
