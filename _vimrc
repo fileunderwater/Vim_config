@@ -133,7 +133,8 @@ let g:tex_flavor='latex'
 " -----------------------------------------------
 " create a html document from markdown file
 command Markdown ! perl "c:\Program Files (x86)\Markdown_1.0.1\Markdown.pl" --html4tags %:p > %:p:h/%:t:r.html
-
+" add syntax file
+au BufRead,BufNewFile *.mkd set filetype=mkd
 
 "#OTHER STUFF################################
 set diffexpr=MyDiff()
