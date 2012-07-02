@@ -1,6 +1,7 @@
 " _vimrc
 " Contains general settings, key mappings and stuff for specifik programs
 " and plugins
+" use this to re-source: ":source $MYVIMRC"
  
 "BASIC APPERANCE
 "--------------------------------------------------------------
@@ -95,7 +96,7 @@ set ofu=syntaxcomplete#Complete
 "improve menu behaviour
 set completeopt=longest,menuone
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-map <C-Space> <C-Shift-x><C-Shift-o>
+inoremap <C-Space> <C-X><C-O>
 
 "to fix remap conflict with imaps/latex-vim
 nnoremap <SID><C-S-j> <Plug>IMAP_JumpForward
@@ -103,7 +104,7 @@ nnoremap <SID><C-S-j> <Plug>IMAP_JumpForward
 "to use spaces instead of tabs in python
 autocmd FileType * set tabstop=2|set shiftwidth=2|set noexpandtab
 autocmd FileType python set tabstop=4|set shiftwidth=4|set expandtab
-set softtabstop=4 " makes the spaces feel like real tabs
+autocmd FileType python set softtabstop=4 " makes the spaces feel like real tabs
 
 
 "# VIM_LATEX 
