@@ -1,10 +1,11 @@
 " _vimrc
 " Contains general settings, key mappings and stuff for specifik programs
 " and plugins
-" use this to re-source: ":source $MYVIMRC"
+" use this to re-source:  source $MYVIMRC
  
 "BASIC APPERANCE
 "--------------------------------------------------------------
+set nocompatible	"turn off vi legacy mode
 colorscheme delek
 set guifont=Consolas:h11::cANSI
 set lines=70 columns=180
@@ -13,34 +14,69 @@ winpos 0 0
 set history=1500
 set cmdheight=2
 
-"default directory
-cd c:\Users\tobjep\texttmp
-
-"stuff
-syntax enable
-set nocompatible
-source $VIMRUNTIME/vimrc_example.vim
+"source $VIMRUNTIME/vimrc_example.vim
 source $VIMRUNTIME/mswin.vim
 behave mswin
+
+"default directory
+cd c:\Users\tobjep\texttmp
 
 ""set encoding options
 setglobal nobomb
 setglobal fileencodings=utf-8,usc-bom,latin1
 setglobal encoding=utf-8
-set ffs=dos,unix
 
-""turn on line numbers
-set number
+""set win/unix options
+" set backup directory
+if has("win32")
+	set backupdir=c:\Users\tobjep\texttmp,.
+	set directory=c:\Users\tobjep\texttmp,.
+	set ffs=dos,unix
+else
+	if has("unix)
+		set backupdir=/home/tobias/tmp,.
+		set directory=/home/tobias/tmp,.
+		set ffs=unix,dos
+	endif
+endif
 
-""set new backup directory
-set backupdir=c:\Users\tobjep\texttmp,.
-set directory=c:\Users\tobjep\texttmp,.
+" From vimrc_example.vim
+" ------------------------------------------------
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+set ruler		" show the cursor position all the time
+set showcmd		" display incomplete commands
+" Don't use Ex mode, use Q for formatting
+map Q gq	
+" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
+" so that you can undo CTRL-U after inserting a line break.
+inoremap <C-U> <C-G>u<C-U>
+"----------------------------------------------
+
+" use mouse is present
+if has('mouse')
+  set mouse=a
+endif
 
 ""to turn of backups
 "set nobackup
 
 "vertical split
 set splitright
+
+"viewing options
+set incsearch
+set hlsearch
+"set ignorecase
+set showmatch
+set number	"turn on line numbers
+
+"for coding
+syntax enable
+filetype on
+filetype indent on
+filetype plugin on
+filetype plugin indent on
 
 " GENERAL MAPPINGS
 " -----------------------------------------
@@ -49,7 +85,7 @@ noremap , :
 imap ii <ESC>
 vmap ii <ESC>
 nmap '' `
-nmap 9 $
+map + $
 
 " WRAPPING 
 " -----------------------------------------
@@ -164,10 +200,37 @@ function MyDiff()
 endfunction
 
 ""
-function Mark2html()
+function Prose()
+	nnoremap j gj
+	nnoremap k gk
+	vnoremap j gj
+	vnoremap k gk
+	"nnoremap gj
+	"nnoremap gk
+	"noremap gj
+	"vnoremap gk
+	"inoremap gj
+	"inoremap gk
+	nmap 0 g^
+	nmap 9 g$
+	nmap $ g$
+endfunction
+
+function! Mark2html()
 		:let p=expand("%:p:h")
 		:let n=expand("%:t:r")
 		:Markdown
 		:vert split
 		:exe "e" p."/".n.".html"
+endfunction
+
+function! Pandoc(type)
+		"function not fully functional yet.
+		let p=expand("%:p:h")
+		let n=expand("%:t:r")
+		let c=expand("%:p")
+		let convtype=a:type
+		exe  "! pandoc -f markdown -t" convtype c "-o" p."/".n.".tex"  
+		vert split
+		exe "e" p."/".n.".tex"
 endfunction
