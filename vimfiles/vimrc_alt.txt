@@ -1,0 +1,295 @@
+" use :so %  to refresh vimrc 
+
+" Use Vim settings, rather then Vi settings (much better!).
+" This must be first, because it changes other options as a side effect.
+set nocompatible
+
+" function keys
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" toggle line numbers
+set number
+nn <F6> :setlocal number! number?<CR>
+:imap <F6> <C-o>:setlocal number! spelllang=en_us<CR>
+
+
+" toggle spellcheck
+set spell
+nn <F7> :setlocal spell? spell!<CR>
+:imap <F7> <C-o>:setlocal spell! spelllang=en_us<CR>
+
+
+" need a comprehensive solution in the future, don't know if this works on unix
+" http://vim.wikia.com/wiki/                                                    Remove_swap_and_backup_files_from_your_working_directory
+if has("win32")
+silent execute '!mkdir "'.$VIMRUNTIME.'/temp"'
+silent execute '!del "'.$VIMRUNTIME.'/temp/*~"'
+set backupdir=$VIMRUNTIME/temp//
+set directory=$VIMRUNTIME/temp//
+endif
+
+
+set tabstop=4 shiftwidth=4 softtabstop=0
+set expandtab   " use space instead of tab
+set virtualedit=block backspace=2
+" Make file/command completion useful
+set wildmenu
+set smartindent infercase laststatus=2 mousehide smarttab
+set visualbell t_vb= noerrorbells 
+
+
+
+
+
+" Switch syntax highlighting on, when the terminal has colors
+" Also switch on highlighting the last used search pattern.
+if &t_Co > 2 || has("gui_running")
+  syntax on
+  set hlsearch
+endif
+
+
+" set color scheme the best I could find per platform
+if has("win32")
+  colorscheme wombat
+  set guifont=Lucida_Console:h12:cANSI
+ elseif has("unix")
+    colorscheme torte
+endif
+
+" backspace in Visual mode deletes selection
+" this doesn't seem to do anything
+vnoremap <BS> d
+
+
+
+"" Windows behavior - mainly taken from mswin.vim
+"""""""""""""""""""""""""""""""""""""""""""""""""
+" CTRL-X  Cut
+vnoremap <C-X> "+x
+
+" CTRL-C and CTRL-Insert are Copy
+vnoremap <C-C> "+y
+vnoremap <C-Insert> "+y
+
+" CTRL-V and SHIFT-Insert are Paste
+map <C-V>		"+gP
+map <S-Insert>		"+gP
+" paste in insert mode - after past go back to insert mode with "a"
+imap <C-V>		<esc>"+gPa
+
+
+cmap <C-V>		<C-R>+
+cmap <S-Insert>		<C-R>+
+
+
+" make arrow keys work in visual mode
+vmap <Esc>OA k
+vmap <Esc>OB j
+vmap <Esc>OC l
+vmap <Esc>OD h
+" simulate shift-arrows (select block in windows) with control-arrows
+inoremap <Esc>[A <C-O>vk
+vnoremap <Esc>[A k
+inoremap <Esc>[B <C-O>vj
+vnoremap <Esc>[B j
+inoremap <Esc>[C <C-O>vl
+vnoremap <Esc>[C l
+inoremap <Esc>[D <C-O>vh
+vnoremap <Esc>[D h
+
+" Use CTRL-Q to do what CTRL-V used to do (visual mode)
+noremap <C-Q>		<C-V>
+
+" Use CTRL-S for saving, also in Insert mode
+noremap <C-S>		:update<CR>
+vnoremap <C-S>		<C-C>:update<CR>
+inoremap <C-S>		<C-O>:update<CR>
+
+" CTRL-A is Select all
+noremap <C-A> gggH<C-O>G
+inoremap <C-A> <C-O>gg<C-O>gH<C-O>G
+cnoremap <C-A> <C-C>gggH<C-O>G
+onoremap <C-A> <C-C>gggH<C-O>G
+snoremap <C-A> <C-C>gggH<C-O>G
+xnoremap <C-A> <C-C>ggVG
+
+" backspace and cursor keys wrap to previous/next line
+set backspace=indent,eol,start whichwrap+=<,>,[,]
+
+" save marks and such to viminfo // http://vimdoc.sourceforge.net/htmldoc/usr_21.html
+set viminfo+=!
+set viminfo='200,f1,<100
+
+""""""""""""""""""""""""""""""""""""""""""""""" EOF
+
+set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%4v\ (%P)%m
+
+
+" Wrap
+set wrap
+
+" Don't wrap words by default
+set linebreak  
+
+" don't set text width
+set textwidth=0
+
+" trying to get rid of wrap on txt files
+set wrapmargin=0
+
+" Tabs are 2 characters
+set tabstop=2
+
+
+" Expand the command line using tab
+set wildchar=<Tab>
+
+" ignore case while searching
+set ignorecase
+
+
+
+" 1000 undo levels
+set undolevels=1000
+
+" show a ruler
+set ruler
+
+" show partial commands
+set showcmd
+
+" show matching braces
+set showmatch
+
+" allows hidden buffers to stay unsaved, but we do not want this, so comment
+set hidden
+
+" window minimum height
+" don't know what this does - Adam
+set wmh=0
+
+
+" this gives us grief of 7.1 - on the lamp server
+" auto-detect the filetype
+if has("win32")
+    filetype plugin indent on
+endif
+
+" syntax highlight
+syntax on
+
+"  mappings -------------------------------
+"
+" nnoremap <silent> :ff :FuzzyFinderFile<CR>
+nnoremap <silent> :fb :FuzzyFinderBuffer<CR>
+nnoremap <silent> :ff :FuzzyFinderMruFile<CR>
+nnoremap <silent> :fd :FuzzyFinderDir<CR>
+nnoremap <silent> :fc :FuzzyFinderMruCmd<CR>
+
+" working with wrapping and navigation smarter
+nnoremap j  gj
+nnoremap k  gk
+nnoremap gj j
+nnoremap gk k
+nnoremap 0  g0
+nnoremap g0 0
+nnoremap $  g$
+nnoremap g$ $
+
+vnoremap j  gj
+vnoremap k  gk
+vnoremap gj j
+vnoremap gk k
+vnoremap 0  g0
+vnoremap g0 0
+vnoremap $  g$
+vnoremap g$ $
+
+" tabs like any other program
+set showtabline=2               " File tabs always visible
+nnoremap <C-S-TAB> :tabprevious<cr>
+nnoremap <C-TAB> :tabnext<cr>
+nnoremap <C-t> :tabnew<cr>
+noremap <C-t> :tabnew<cr>
+noremap <C-S-tab> :tabprevious<cr>
+noremap <C-tab> :tabnext<cr>
+imap <C-S-tab> <ESC>:tabprevious<cr>i
+imap <C-tab> <ESC>:tabnext<cr>i
+imap <C-t> <ESC>:tabnew<cr>
+
+
+" This Replaces 'Shift-Colon' with 'Space (while in normal mode only)'
+" This is mainly because my Control key often pops off when I hit shift
+" Also, Shift-Colon -> q  often results in a 'Q', because Shift stays depressed
+" (I know that is user error, but I want to try this anyways)
+nnoremap <Space> :
+" This doesn't work for some pre-selection type menus.  Example - :ff
+
+
+" Always show the menu, insert longest match
+set completeopt=menuone
+
+" When editing a file, always jump to the last known cursor position.
+" Don't do it when the position is invalid or when inside an event handler
+" (happens when dropping a file on gvim).
+autocmd BufReadPost *
+  \ if line("'\"") > 0 && line("'\"") <= line("$") |
+  \   exe "normal g`\"" |
+  \ endif
+
+
+" When started as "evim", evim.vim will already have done these settings.
+if v:progname =~? "evim"
+  finish
+endif
+
+
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+
+set history=200		" keep 200 lines of command line history
+set incsearch		" do incremental searching
+
+
+" Don't use Ex mode, use Q for formatting
+map Q gq
+
+" In many terminal emulators the mouse works just fine, thus enable it.
+if has('mouse')
+  set mouse=a
+endif
+
+if has("win32")
+ elseif has("unix")
+   " disable mouse switching to visual mode
+    set mouse-=a
+endif
+
+
+" Make ',e' (in normal mode) give a prompt for opening files
+" in the same dir as the current buffer's file.
+if has("unix")
+  map ,e :e <C-R>=expand("%:p:h") . "/" <CR>
+else
+  map ,e :e <C-R>=expand("%:p:h") . "\\" <CR>
+endif
+
+" http://vim.wikia.com/wiki/Reload_the_same_file_in_different_encoding
+" reload same file with different encoding
+" f8 to see the menu.
+function! ChangeFileencoding()
+  let encodings = ['utf-8', 'latin1', 'cp866']
+  let prompt_encs = []
+  let index = 0
+  while index < len(encodings)
+    call add(prompt_encs, index.'. '.encodings[index])
+    let index = index + 1
+  endwhile
+  let choice = inputlist(prompt_encs)
+  if choice >= 0 && choice < len(encodings)
+    execute 'e ++enc='.encodings[choice].' %:p'
+  endif
+endf
+nmap <F8> :call ChangeFileencoding()<CR>
