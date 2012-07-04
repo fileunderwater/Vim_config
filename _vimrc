@@ -6,20 +6,13 @@
 "BASIC APPERANCE
 "--------------------------------------------------------------
 set nocompatible	"turn off vi legacy mode
-colorscheme delek
+colorscheme inkpot	"alt delek, morning
 set guifont=Consolas:h11::cANSI
-set lines=70 columns=180
 winpos 0 0
 "au GUIEnter * simalt ~x "to get maximum window
 set history=1500
 set cmdheight=2
-
 "source $VIMRUNTIME/vimrc_example.vim
-source $VIMRUNTIME/mswin.vim
-behave mswin
-
-"default directory
-cd c:\Users\tobjep\texttmp
 
 ""set encoding options
 setglobal nobomb
@@ -29,16 +22,35 @@ setglobal encoding=utf-8
 ""set win/unix options
 " set backup directory
 if has("win32")
+	cd c:\Users\tobjep\texttmp	"default directory for new files
 	set backupdir=c:\Users\tobjep\texttmp,.
 	set directory=c:\Users\tobjep\texttmp,.
 	set ffs=dos,unix
+	set lines=70 columns=170
 else
-	if has("unix)
+	if has("unix")
 		set backupdir=/home/tobias/tmp,.
 		set directory=/home/tobias/tmp,.
 		set ffs=unix,dos
 	endif
 endif
+
+
+" Some Windows-like behaviour - from msvim.vim
+"-------------------------------
+"source $VIMRUNTIME/mswin.vim
+"behave mswin
+
+map <S-Insert>		"+gP	
+
+" Pasting blockwise and linewise selections is not possible in Insert and
+" Visual mode without the +virtualedit feature.  They are pasted as if they
+" were characterwise instead.
+" Uses the paste.vim autoload script.
+exe 'inoremap <script> <S-Insert>' paste#paste_cmd['i']
+exe 'vnoremap <script> <S-Insert>' paste#paste_cmd['v']
+
+
 
 " From vimrc_example.vim
 " ------------------------------------------------
@@ -61,15 +73,13 @@ endif
 ""to turn of backups
 "set nobackup
 
-"vertical split
-set splitright
-
 "viewing options
-set incsearch
-set hlsearch
-"set ignorecase
+set incsearch	"incremental search
+set hlsearch	"highlight search
+"set ignorecase	"to use case-insensitive search
 set showmatch
 set number	"turn on line numbers
+set splitright	"vertical split
 
 "for coding
 syntax enable
@@ -89,7 +99,7 @@ map + $
 
 " WRAPPING 
 " -----------------------------------------
-"option for wraping words
+"option for wrapping words
 set wrap linebreak
 "set showbreak='...'
 
@@ -119,13 +129,8 @@ nnoremap <C-k> gk
 "inoremap gk
 
 
-"Python stuff
-"-----------------------------------------------------
-noremap <F5> <ESC>:w<CR>: execute "!python %"<CR><CR>
-noremap <C-F5> <ESC>:w<CR>: execute "!c:/python32/python %"<CR><CR>
-"noremap <F5> <ESC>:w<CR>:silent execute "!python %"<CR><CR>
-
 "Omni-completion
+"------------------------------------------------------
 "to turn on
 filetype plugin on
 set ofu=syntaxcomplete#Complete
@@ -133,6 +138,13 @@ set ofu=syntaxcomplete#Complete
 set completeopt=longest,menuone
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 inoremap <C-Space> <C-X><C-O>
+
+
+"Python stuff
+"-----------------------------------------------------
+noremap <F5> <ESC>:w<CR>: execute "!python %"<CR><CR>
+noremap <C-F5> <ESC>:w<CR>: execute "!c:/python32/python %"<CR><CR>
+"noremap <F5> <ESC>:w<CR>:silent execute "!python %"<CR><CR>
 
 "to fix remap conflict with imaps/latex-vim
 nnoremap <SID><C-S-j> <Plug>IMAP_JumpForward
@@ -143,7 +155,7 @@ autocmd FileType python set tabstop=4|set shiftwidth=4|set expandtab
 autocmd FileType python set softtabstop=4 " makes the spaces feel like real tabs
 
 
-"# VIM_LATEX 
+" VIM_LATEX 
 " ----------------------------------------------------
 " REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
 filetype plugin on
@@ -171,9 +183,10 @@ let g:tex_flavor='latex'
 " create a html document from markdown file
 command Markdown ! perl "c:\Program Files (x86)\Markdown_1.0.1\Markdown.pl" --html4tags %:p > %:p:h/%:t:r.html
 " add syntax file
-au BufRead,BufNewFile *.mkd set filetype=mkd
+au BufRead,BufNewFile *.text set filetype=mkd
 
-"#OTHER STUFF################################
+" OTHER STUFF
+" ---------------------------------------------------------
 set diffexpr=MyDiff()
 function MyDiff()
   let opt = '-a --binary '
@@ -200,7 +213,7 @@ function MyDiff()
 endfunction
 
 ""
-function Prose()
+function! Prose()
 	nnoremap j gj
 	nnoremap k gk
 	vnoremap j gj
