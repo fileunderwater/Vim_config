@@ -7,7 +7,6 @@
 "--------------------------------------------------------------
 set nocompatible	"turn off vi legacy mode
 colorscheme inkpot	"alt delek, morning
-set guifont=Consolas:h11::cANSI
 winpos 0 0
 "au GUIEnter * simalt ~x "to get maximum window
 set history=1500
@@ -27,11 +26,13 @@ if has("win32")
 	set directory=c:\Users\tobjep\texttmp,.
 	set ffs=dos,unix
 	set lines=70 columns=170
+	set guifont=Consolas:h11::cANSI
 else
 	if has("unix")
 		set backupdir=/home/tobias/tmp,.
 		set directory=/home/tobias/tmp,.
 		set ffs=unix,dos
+		"set guifont=Monospace 10
 	endif
 endif
 
