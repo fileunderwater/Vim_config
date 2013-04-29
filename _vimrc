@@ -1,7 +1,7 @@
 " _vimrc
-" Contains general settings, key mappings and stuff for specifik programs
+" Contains general settings, key mappings and stuff for specific programs
 " and plugins
-" use this to re-source:  source $MYVIMRC
+" to re-source:  source $MYVIMRC
  
 "BASIC APPERANCE
 "--------------------------------------------------------------
@@ -19,20 +19,18 @@ setglobal nobomb
 setglobal fileencodings=utf-8,usc-bom,latin1
 setglobal encoding=utf-8
 
-""set win/unix options
 " set backup directory
+cd $HOME/texttmp	"default directory for new files
+set backupdir=$HOME\texttmp,.
+set directory=$HOME\texttmp,.
+
+"set win/unix options
 if has("win32")
-	cd $HOME\texttmp	"default directory for new files
-	set backupdir=$HOME\texttmp,.
-	set directory=$HOME\texttmp,.
 	set ffs=dos,unix
 	set lines=70 columns=170
 	set guifont=Consolas:h11::cANSI
 else
 	if has("unix")
-		cd $HOME/texttmp	"default directory for new files
-		set backupdir=$HOME/texttmp,.
-		set directory=$HOME/texttmp,.
 		set ffs=unix,dos
 		"set guifont=Monospace 10
 	endif
@@ -52,7 +50,6 @@ map <S-Insert>		"+gP
 " Uses the paste.vim autoload script.
 exe 'inoremap <script> <S-Insert>' paste#paste_cmd['i']
 exe 'vnoremap <script> <S-Insert>' paste#paste_cmd['v']
-
 
 
 " From vimrc_example.vim
@@ -134,11 +131,13 @@ nnoremap <C-k> gk
 "inoremap gj
 "inoremap gk
 
+
+" Plugins
+"------------------------------------------------------
 " For Vim-R-plugin
 let vimrplugin_assign = 0
 
 "Omni-completion
-"------------------------------------------------------
 "to turn on
 filetype plugin on
 set ofu=syntaxcomplete#Complete
