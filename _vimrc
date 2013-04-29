@@ -13,6 +13,7 @@ winpos 0 0
 set history=1500
 set cmdheight=2
 "source $VIMRUNTIME/vimrc_example.vim
+let maplocalleader = '-' 
 
 ""set encoding options
 setglobal nobomb
@@ -96,6 +97,9 @@ imap ii <ESC>
 vmap ii <ESC>
 nmap '' `
 map + $
+command Spell :setlocal spell spelllang=en_us
+nmap -n ]s
+nmap -p [s
 
 " WRAPPING 
 " -----------------------------------------
@@ -128,6 +132,8 @@ nnoremap <C-k> gk
 "inoremap gj
 "inoremap gk
 
+" For Vim-R-plugin
+let vimrplugin_assign = 0
 
 "Omni-completion
 "------------------------------------------------------
@@ -142,7 +148,8 @@ inoremap <C-Space> <C-X><C-O>
 
 "Python stuff
 "-----------------------------------------------------
-noremap <F5> <ESC>:w<CR>: execute "!python %"<CR><CR>
+"noremap <silent> <F5> <ESC>:!start "!python %"<CR> 
+noremap <silent> <F5> <ESC>:w<CR>: execute "!python %"<CR><CR>
 noremap <C-F5> <ESC>:w<CR>: execute "!c:/python32/python %"<CR><CR>
 "noremap <F5> <ESC>:w<CR>:silent execute "!python %"<CR><CR>
 
