@@ -22,16 +22,17 @@ setglobal encoding=utf-8
 ""set win/unix options
 " set backup directory
 if has("win32")
-	cd c:\Users\tobjep\texttmp	"default directory for new files
-	set backupdir=c:\Users\tobjep\texttmp,.
-	set directory=c:\Users\tobjep\texttmp,.
+	cd $HOME\texttmp	"default directory for new files
+	set backupdir=$HOME\texttmp,.
+	set directory=$HOME\texttmp,.
 	set ffs=dos,unix
 	set lines=70 columns=170
 	set guifont=Consolas:h11::cANSI
 else
 	if has("unix")
-		set backupdir=/home/tobias/tmp,.
-		set directory=/home/tobias/tmp,.
+		cd $HOME/texttmp	"default directory for new files
+		set backupdir=$HOME/texttmp,.
+		set directory=$HOME/texttmp,.
 		set ffs=unix,dos
 		"set guifont=Monospace 10
 	endif
