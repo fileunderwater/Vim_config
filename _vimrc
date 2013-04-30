@@ -1,7 +1,8 @@
 " _vimrc
-" Contains general settings, key mappings and stuff for specific programs
+" Contains general settings, key mappings, functions and stuff for specific programs
 " and plugins
 " to re-source:  source $MYVIMRC
+" on unix/linux .vimrc is symlinked to this file.
  
 "BASIC APPERANCE
 "--------------------------------------------------------------
@@ -88,6 +89,7 @@ filetype indent on
 filetype plugin on
 filetype plugin indent on
 
+
 " GENERAL MAPPINGS
 " -----------------------------------------
 noremap <C-s> i<CR><Esc>
@@ -99,6 +101,8 @@ map + $
 command Spell :setlocal spell spelllang=en_us
 nmap -n ]s
 nmap -p [s
+noremap <M-c> ~
+
 
 " WRAPPING 
 " -----------------------------------------
@@ -132,7 +136,7 @@ nnoremap <C-k> gk
 "inoremap gk
 
 
-" Plugins
+" PLUGINS
 "------------------------------------------------------
 " For Vim-R-plugin
 let vimrplugin_assign = 0
@@ -193,34 +197,10 @@ command Markdown ! perl "c:\Program Files (x86)\Markdown_1.0.1\Markdown.pl" --ht
 " add syntax file
 au BufRead,BufNewFile *.text set filetype=mkd
 
+
 " OTHER STUFF
 " ---------------------------------------------------------
-set diffexpr=MyDiff()
-function MyDiff()
-  let opt = '-a --binary '
-  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-  let arg1 = v:fname_in
-  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-  let arg2 = v:fname_new
-  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-  let arg3 = v:fname_out
-  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-  let eq = ''
-  if $VIMRUNTIME =~ ' '
-    if &sh =~ '\<cmd'
-      let cmd = '""' . $VIMRUNTIME . '\diff"'
-      let eq = '"'
-    else
-      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
-    endif
-  else
-    let cmd = $VIMRUNTIME . '\diff'
-  endif
-  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
-endfunction
-
-""
+" Functions to switch between writing code and prose
 function! Prose()
 	nnoremap j gj
 	nnoremap k gk
@@ -233,10 +213,27 @@ function! Prose()
 	"inoremap gj
 	"inoremap gk
 	nmap 0 g^
-	nmap 9 g$
-	nmap $ g$
+	nmap + g$
+	"nmap $ g$
 endfunction
 
+function! Code()
+	if strlen(maparg("+", "g$"))
+		nunmap +
+	endif
+	map + $
+	if strlen(maparg("0", "g^"))
+		nunmap 0
+	endif
+	if strlen(maparg("j", "gj"))
+		nunmap j
+	endif
+	if strlen(maparg("k", "gk"))
+		nunmap k
+	endif
+endfunction
+
+" Other functions - some not functional
 function! Mark2html()
 		:let p=expand("%:p:h")
 		:let n=expand("%:t:r")
