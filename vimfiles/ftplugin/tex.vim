@@ -5,3 +5,6 @@
 "TexLet g:Tex_CompileRule_pdf
 
 "TexLet g:Tex_DefaultTargetFormat = 'pdf'
+
+" options
+setlocal foldlevel=999

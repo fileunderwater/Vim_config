@@ -64,6 +64,7 @@ map Q gq
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
+set autochdir
 "----------------------------------------------
 
 " use mouse is present
@@ -102,7 +103,8 @@ command Spell :setlocal spell spelllang=en_us
 nmap -n ]s
 nmap -p [s
 noremap <M-c> ~
-
+"to replace word with yanked/cut text
+nmap <silent> cp "_cw<C-R>"<Esc> 
 
 " WRAPPING 
 " -----------------------------------------
@@ -134,6 +136,14 @@ nnoremap <C-k> gk
 "vnoremap gk
 "inoremap gj
 "inoremap gk
+
+"FOLDING
+"---
+autocmd Syntax tex,vim setlocal foldmethod=syntax
+autocmd Syntax tex,vim normal zR
+"set foldmethod=syntax
+set foldlevel=20
+set foldlevelstart=20
 
 
 " PLUGINS
